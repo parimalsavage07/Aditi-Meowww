@@ -1,70 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Just For Aditi 💖</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    body {
+    /* Reset */
+    * {
       margin: 0;
-      font-family: 'Poppins', 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to right, #ffd6e8, #ffe6f7);
-      color: #4d194d;
-      text-align: center;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
       overflow-x: hidden;
+      font-family: 'Poppins', 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #ffd6e8, #ffe6f7);
+      color: #4d194d;
+      perspective: 1px; /* create 3D space for parallax */
+      perspective-origin: center center;
     }
+
+    /* Parallax layers */
+    .parallax {
+      position: relative;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .layer {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: contain;
+      pointer-events: none;
+      will-change: transform;
+      mix-blend-mode: screen;
+      opacity: 0.85;
+    }
+    .layer1 {
+      background-image: url('https://i.postimg.cc/h4P8WyXv/flowers.png'); /* Cute flower layer */
+      transform: translateZ(-0.3px) scale(1.3);
+      z-index: 1;
+    }
+    .layer2 {
+      background-image: url('https://i.postimg.cc/d0vWybDG/hearts.png'); /* Floating hearts */
+      transform: translateZ(-0.15px) scale(1.15);
+      z-index: 2;
+      opacity: 0.6;
+    }
+    .layer3 {
+      background-image: url('https://i.postimg.cc/fTGmn9m3/clouds.png'); /* Soft clouds */
+      transform: translateZ(-0.05px) scale(1.05);
+      z-index: 3;
+      opacity: 0.4;
+    }
+
+    /* Content container */
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      text-align: center;
+      user-select: none;
+    }
+
     h1 {
-      margin-top: 2rem;
-      font-size: 2.5rem;
-      animation: fadeIn 2s ease-in-out;
+      font-size: 3rem;
       font-weight: 600;
+      margin-bottom: 0.2rem;
+      animation: fadeInUp 1.4s ease forwards;
+      opacity: 0;
     }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      animation: fadeInUp 1.6s ease forwards;
+      opacity: 0;
+      color: #7a2a69;
+    }
+
     .button {
-      background-color: #ff69b4;
+      background: linear-gradient(135deg, #ff69b4, #ff85c1);
       border: none;
-      color: white;
-      padding: 1rem 2rem;
-      margin: 1rem;
+      padding: 1rem 2.5rem;
+      margin: 1rem 0.5rem;
+      border-radius: 40px;
       font-size: 1.2rem;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 2px 2px 5px #999;
+      color: white;
       font-weight: 600;
+      box-shadow: 0 0 10px #ff69b4aa;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      animation: fadeInUp 1.8s ease forwards;
+      opacity: 0;
+      position: relative;
+      overflow: hidden;
     }
     .button:hover {
-      background-color: #ff85c1;
+      box-shadow: 0 0 20px #ff69b4ff;
+      transform: scale(1.05);
     }
-    .output {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      transition: all 0.3s;
-      font-weight: 400;
+    .button:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, #fff7 20%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .button:hover:before {
+      opacity: 0.2;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    .output, .flowers {
+      margin-top: 2rem;
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: #8e3a8e;
+      min-height: 3rem;
+      animation: fadeInUp 2.2s ease forwards;
+      opacity: 0;
+      user-select: text;
     }
     .flowers {
-      font-size: 3rem;
-      margin-top: 2rem;
+      font-size: 3.5rem;
+      margin-top: 1rem;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    /* Floating ring or flower */
+    .floating-gift {
+      position: fixed;
+      right: 15px;
+      bottom: 15px;
+      width: 80px;
+      height: 80px;
+      pointer-events: none;
+      animation: floatUpDown 6s ease-in-out infinite;
+      filter: drop-shadow(0 0 5px #ff69b4cc);
+      z-index: 20;
     }
-    audio {
-      display: none;
+    @keyframes floatUpDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px) rotate(10deg);}
+    }
+
+    /* Fade in up */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    /* Responsive font sizing */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .button {
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+      }
+      .output {
+        font-size: 1.3rem;
+      }
+      .flowers {
+        font-size: 2.5rem;
+      }
+      .floating-gift {
+        width: 60px;
+        height: 60px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Hey Aditi 🌸</h1>
-  <p>You deserve all the smiles in the world 💕</p>
-  <button class="button" onclick="playAudio(); showPickupLine()">Get a Smile 😊</button>
-  <button class="button" onclick="playAudio(); showFlowers()">Open Gift 🎁</button>
+  <div class="parallax">
+    <div class="layer layer3"></div>
+    <div class="layer layer2"></div>
+    <div class="layer layer1"></div>
 
-  <div class="output" id="output"></div>
-  <div class="flowers" id="flowers"></div>
+    <div class="content">
+      <h1>Hey Aditi 🌸</h1>
+      <p>You deserve all the smiles in the world 💕</p>
+      <button class="button" onclick="playAudio(); showPickupLine()">Get a Smile 😊</button>
+      <button class="button" onclick="playAudio(); showFlowers()">Open Gift 🎁</button>
+      <div class="output" id="output"></div>
+      <div class="flowers" id="flowers"></div>
+    </div>
+  </div>
+
+  <img class="floating-gift" src="https://i.postimg.cc/qM2LYPKy/flower-ring.png" alt="Floating Flower" />
 
   <audio id="bgAudio" loop>
-    <source src="0001.mp3" type="audio/mpeg">
+    <source src="0001.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 
@@ -88,15 +248,32 @@
 
     function showPickupLine() {
       const output = document.getElementById('output');
+      const flowers = document.getElementById('flowers');
       const randomLine = lines[Math.floor(Math.random() * lines.length)];
       output.innerText = randomLine;
-      document.getElementById('flowers').innerText = '';
+      flowers.innerText = '';
+      fadeIn(output);
     }
 
     function showFlowers() {
-      document.getElementById('output').innerText = '';
-      document.getElementById('flowers').innerText = '💐🌷🌸🌹🌻🌼🌺';
+      const output = document.getElementById('output');
+      const flowers = document.getElementById('flowers');
+      output.innerText = '';
+      flowers.innerText = '💐🌷🌸🌹🌻🌼🌺';
+      fadeIn(flowers);
+    }
+
+    // Fade in effect
+    function fadeIn(element) {
+      element.style.opacity = 0;
+      let op = 0;
+      const timer = setInterval(() => {
+        if (op >= 1) clearInterval(timer);
+        element.style.opacity = op;
+        op += 0.05;
+      }, 20);
     }
   </script>
 </body>
 </html>
+
