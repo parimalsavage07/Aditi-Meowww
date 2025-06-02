@@ -5,46 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Just For Aditi 💖</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow-x: hidden;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       background: linear-gradient(to right, #ffd6e8, #ffe6f7);
       color: #4d194d;
       text-align: center;
-    }
-    .parallax-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      pointer-events: none;
-      z-index: -1;
-    }
-    .layer1 { transform: translateZ(-1px); background-image: url('https://i.imgur.com/EZ0QcvL.png'); }
-    .layer2 { transform: translateZ(-0.5px); background-image: url('https://i.imgur.com/nGcHQDy.png'); }
-    .layer3 { transform: translateZ(0); background-image: url('https://i.imgur.com/HqIs2Y7.png'); }
-    .floating-ring {
-      position: absolute;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 150px;
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float {
-      0% { transform: translate(-50%, -50%) translateY(0); }
-      50% { transform: translate(-50%, -50%) translateY(-20px); }
-      100% { transform: translate(-50%, -50%) translateY(0); }
+      overflow-x: hidden;
     }
     h1 {
-      margin-top: 4rem;
-      font-size: 2.8rem;
+      margin-top: 2rem;
+      font-size: 2.5rem;
       animation: fadeIn 2s ease-in-out;
     }
     .button {
@@ -80,26 +51,30 @@
   </style>
 </head>
 <body>
-  <div class="parallax-layer layer1"></div>
-  <div class="parallax-layer layer2"></div>
-  <div class="parallax-layer layer3"></div>
-
-  <img src="https://i.imgur.com/ZHBsq3h.png" alt="Floating Flower Ring" class="floating-ring" />
-
   <h1>Hey Aditi 🌸</h1>
   <p>You deserve all the smiles in the world 💕</p>
-  <button class="button" onclick="showPickupLine()">Get a Smile 😊</button>
-  <button class="button" onclick="showFlowers()">Open Gift 🎁</button>
+  <button class="button" onclick="playAudio(); showPickupLine()">Get a Smile 😊</button>
+  <button class="button" onclick="playAudio(); showFlowers()">Open Gift 🎁</button>
 
   <div class="output" id="output"></div>
   <div class="flowers" id="flowers"></div>
 
-  <audio autoplay loop>
+  <audio id="bgAudio" loop>
     <source src="0001.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
+    const audio = document.getElementById("bgAudio");
+    let audioPlayed = false;
+
+    function playAudio() {
+      if (!audioPlayed) {
+        audio.play().catch(err => console.log("Autoplay blocked: ", err));
+        audioPlayed = true;
+      }
+    }
+
     const lines = [
       "Are you a magician? Because whenever I look at you, everyone else disappears!",
       "If beauty were time, you'd be eternity.",
@@ -112,24 +87,11 @@
       const randomLine = lines[Math.floor(Math.random() * lines.length)];
       output.innerText = randomLine;
       document.getElementById('flowers').innerText = '';
-      fadeIn(output);
     }
 
     function showFlowers() {
-      const flowers = document.getElementById('flowers');
       document.getElementById('output').innerText = '';
-      flowers.innerText = '💐🌷🌸🌹🌻🌼🌺';
-      fadeIn(flowers);
-    }
-
-    function fadeIn(element) {
-      element.style.opacity = 0;
-      let op = 0;
-      const timer = setInterval(() => {
-        if (op >= 1) clearInterval(timer);
-        element.style.opacity = op;
-        op += 0.05;
-      }, 20);
+      document.getElementById('flowers').innerText = '💐🌷🌸🌹🌻🌼🌺';
     }
   </script>
 </body>
