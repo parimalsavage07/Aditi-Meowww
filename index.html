@@ -1,12 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- your head content -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Just For Aditi 💖</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       background: linear-gradient(to right, #ffd6e8, #ffe6f7);
       color: #4d194d;
       text-align: center;
@@ -16,7 +17,6 @@
       margin-top: 2rem;
       font-size: 2.5rem;
       animation: fadeIn 2s ease-in-out;
-      font-weight: 600;
     }
     .button {
       background-color: #ff69b4;
@@ -28,7 +28,6 @@
       border-radius: 30px;
       cursor: pointer;
       box-shadow: 2px 2px 5px #999;
-      font-weight: 600;
     }
     .button:hover {
       background-color: #ff85c1;
@@ -37,7 +36,6 @@
       margin-top: 1rem;
       font-size: 1.5rem;
       transition: all 0.3s;
-      font-weight: 400;
     }
     .flowers {
       font-size: 3rem;
@@ -50,17 +48,51 @@
     audio {
       display: none;
     }
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 3rem;
-      }
-      .output {
-        font-size: 1.8rem;
-      }
-      .button {
-        font-size: 1.4rem;
-        padding: 1.2rem 2.5rem;
-      }
-    }
   </style>
 </head>
+<body>
+  <h1>Hey Aditi 🌸</h1>
+  <p>You deserve all the smiles in the world 💕</p>
+  <button class="button" onclick="playAudio(); showPickupLine()">Get a Smile 😊</button>
+  <button class="button" onclick="playAudio(); showFlowers()">Open Gift 🎁</button>
+
+  <div class="output" id="output"></div>
+  <div class="flowers" id="flowers"></div>
+
+  <audio id="bgAudio" loop>
+    <source src="0001.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const audio = document.getElementById("bgAudio");
+    let audioPlayed = false;
+
+    function playAudio() {
+      if (!audioPlayed) {
+        audio.play().catch(err => console.log("Autoplay blocked: ", err));
+        audioPlayed = true;
+      }
+    }
+
+    const lines = [
+      "Are you a magician? Because whenever I look at you, everyone else disappears!",
+      "If beauty were time, you'd be eternity.",
+      "You light up my world like nobody else.",
+      "Even the stars in the sky are jealous of your sparkle."
+    ];
+
+    function showPickupLine() {
+      const output = document.getElementById('output');
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      output.innerText = randomLine;
+      document.getElementById('flowers').innerText = '';
+    }
+
+    function showFlowers() {
+      document.getElementById('output').innerText = '';
+      document.getElementById('flowers').innerText = '💐🌷🌸🌹🌻🌼🌺';
+    }
+  </script>
+</body>
+</html>
